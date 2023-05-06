@@ -1,23 +1,36 @@
-import logo from './logo.svg';
+
+import { useEffect, useState } from 'react';
 import './App.css';
+import DetailsPage from './components/DetailsPage';
+import Home from './components/Home';
 
 function App() {
+  
+  const [data, setData] = useState();
+
+  //get API 
+  
+  useEffect(() => {
+    
+    const url = "https://api.tvmaze.com/search/shows?q=all"
+
+    fetch(url)
+      .then(response => response.json()).then(json => {
+        console.log("API DATA SUCCESS", json)
+        setData(json)
+      }).catch(e => {
+        console.log("e", e)
+      })
+  }, [])
+  
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      
+      <Home />
+      <DetailsPage/>
+      
+
     </div>
   );
 }
