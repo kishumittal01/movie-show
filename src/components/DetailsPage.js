@@ -1,36 +1,79 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import "./DetailsPage.css"
+import { Link } from 'react-router-dom';
 
 function DetailsPage() {
-  return (
+  
+    const [shows, setShows] = useState([]);
+
+    const getDetail = async () => {
+        const response = await fetch("https://api.tvmaze.com/search/shows?q=all");
+        
+        setShows(await response.json());
+        
+    }
+
+    useEffect( () => {
+        getDetail();
+    }, []);
+    
+  
+    return (
     <div>
-      <div className="container details">
-            <div className="row">
-                <div className="col xs={12} md={4}">
-                Column
-                </div>
-                <div className="col xs={12} md={8}">
-                    <div className="row">
-                        TITLE
-                    </div>
-                    <div className="row">
-                        RATING
-                    </div>
-                    <div className="row">
-                        LANGUAGE
-                    </div>
-                    <div className="row">
-                        GENRE
-                    </div>
-                    <div className="row">
-                        TIME
-                    </div>
-                    <div className="row">
-                        SUMMARY Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque fugit hic est corrupti ea odio ducimus at veniam reprehenderit rem!
-                    </div>
-                </div>
-            </div>
-            </div>
+
+        {
+
+
+            shows.map((e) => {
+                            
+                const {show, score} = e;
+                const {id, image, language, name, rating, runtime, summary, genres, type} = e.show;
+                
+                
+
+                return (
+                    <div className="container-fluid details">
+                        <div className="row">
+                            <div className="col-12 col-md-4">
+                            <img src='https://static.tvmaze.com/uploads/images/medium_portrait/425/1064746.jpg' alt="" className='rounded' width={"200"}/>
+                            </div>
+                            <div className="col-12 col-md-8">
+                                <div className="row">
+                                    <h1>{name}</h1>
+                                </div>
+                                <div className="row">
+                                    RATING
+                                </div>
+                                <div className="row">
+                                    TYPE: {type}
+                                </div>
+                                <div className="row">
+                                    LANGUAGE: {language}
+                                </div>
+                                <div className="row">
+                                    GENRE: {genres}
+                                </div>
+                                <div className="row">
+                                    RUNTIME: {runtime}
+                                </div>
+                                <div className="row">
+                                    {summary}
+                                </div>
+                                <Link to="/booking">
+                                <div className='row'>
+                                        <button>Book Now</button>
+                                    </div>
+                                </Link>
+                            </div>
+                        </div>
+                        </div>
+                )
+
+            
+            })
+        }
+        
+        
     </div>
   )
 }

@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
+
 
 function Home() {
     
@@ -11,14 +13,13 @@ function Home() {
         
     }
 
-
     useEffect( () => {
         getDetail();
     }, []);
-  
-  
+    
+
     return (
-    <div className='container-fluid mt-5'>
+    <div className='container mt-5'>
         <div className="row text-center">
 
 
@@ -35,7 +36,7 @@ function Home() {
                         <div className="card p-2">
                             <div className="d-flex align-items-center">
                                 <div className="image">
-                                    <img src={image} alt="" className='rounded' width={"200"}/>
+                                    <img src='https://static.tvmaze.com/uploads/images/medium_portrait/425/1064746.jpg' alt="" className='rounded' width={"200"}/>
                                 </div>
                                 <div className="ml-3 w-100">
                                     <h4 className="mb-0 mt-0 textLeft">{name}</h4> <span className="textLeft">{score}</span>
@@ -45,10 +46,11 @@ function Home() {
                                              <span className="number1">{genres}</span>
                                              <a >{show.url}</a>
                                         </div>
-                                        <div>{summary}</div>
-                                        
                                     </div>
-                                    <div className="button"><button >View Details</button></div>
+                                    
+                                    <Link to="/details">
+                                        <div className="button"><button>View Details</button></div>
+                                    </Link>
                                 </div>
                             </div>
                         </div>

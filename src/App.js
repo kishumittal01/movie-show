@@ -1,37 +1,44 @@
 
-import { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import DetailsPage from './components/DetailsPage';
 import Home from './components/Home';
+import Booking from './components/Booking';
+import Header from './components/Header';
 
 function App() {
   
-  const [data, setData] = useState();
-
-  //get API 
-  
-  useEffect(() => {
-    
-    const url = "https://api.tvmaze.com/search/shows?q=all"
-
-    fetch(url)
-      .then(response => response.json()).then(json => {
-        console.log("API DATA SUCCESS", json)
-        setData(json)
-      }).catch(e => {
-        console.log("e", e)
-      })
-  }, [])
-  
-  
   return (
-    <div className="App">
-      
-      <Home />
-      <DetailsPage/>
-      
-
-    </div>
+    
+    <Router>
+        <div className="App">
+          
+          <Routes>
+            <Route exact path= "/" element={(
+              <> 
+                <Header />   
+                <Home />
+              </>
+              )}
+            />
+            <Route exact path= "/details" element={(
+              <> 
+                <Header />   
+                <DetailsPage/>
+              </>
+              )}
+            />
+            <Route exact path= "/booking" element={(
+              <>    
+                <Booking/>
+              </>
+              )}
+            />
+          
+          
+          </Routes>
+        </div>
+    </Router>
   );
 }
 
